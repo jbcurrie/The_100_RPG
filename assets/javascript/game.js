@@ -18,6 +18,7 @@ var alieHP = 297;
 var alieAP = 3;
 
 var gamePlayers = $("a");
+var gamePlayersClass = [".bellamy",".alie",".dante",".clarke"];
 var gameDefenders = [];
 var gameEnemies = [];
 //+$(this).data(data attribute) converts the data value to a number
@@ -38,26 +39,37 @@ $(document).ready(function() {
 	var dante = $("<h4>HP : " + danteHP + "</h4>");
 	$("#dante").append(dante);
 	$("a").addClass("myCharacter");
+	$("body",".jumbotron").append("<img src=images/Wiki_background.jpg>")
 	//could also add data attributes here for AP
 });	
 
 	//var myCharacter = $("myCharacter");
 	//var enemyCharacter = $("enemyCharacter");
-	var heroCheck = false;
+	
 
 //use this to apply function to this 'a'
 $("a").on('click',function(event){
 	$("a").removeClass("myCharacter");
+		var enemyCheck = true;
 	//$(this).addClass("myCharacter");
-		$(this).addClass("myCharacter");
-		var hero = $(this);
-		debugger;
-		var heroCheck = true;
+		//$(this).addClass("myCharacter");
+		// var hero = $(this);
+		// debugger;
 		console.log(this);
 		for (var i = 0; i < gamePlayers.length; i++) {
 			console.log(i);
-			if (hero.index() !== gamePlayers[indexOf(i)]) {
-				$("a").addClass("enemyCharacter");
+			// debugger;
+			if (this.closest("a") === gamePlayers.get(i)) {
+				$(gamePlayersClass[i]).closest("a").addClass("myCharacter");
+				enemyCheck = false;
+			} else {
+				// debugger;
+				// for (var j = 0; j < gamePlayers.length; j++) {
+					// var enemy = gamePlayers.get(j)
+					// $("a").index($(".clarke"))
+					// $(gamePlayersClass[j]).closest("a").removeClass("myCharacter");
+					$(gamePlayersClass[i]).closest("a").addClass("enemyCharacter");
+				// }
 			}
 		}
 	//add a class/variable/value indicating this is your character so that you can run a function to push enemies to the next div
