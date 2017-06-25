@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>The 100 RPG</title>
+	  <!-- Bootstrap CSS -->
+  	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+	  <!-- Optional theme -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css">
+	<link rel="stylesheet" type="text/css" href="assets/css/style.css">
+</head>
+	<body>
+		<div class="jumbotron">
+			<div class="container">
+				<div class="row">
+					<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+						<div class="header text-center">
+							<h1>The 100</h1>
+						</div>
+						<div class="row" id="startPlayers">
+							<div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
+								<a href="#" class="thumbnail text-center bellamy">
+									<img src="assets/images/Bellamy_Blake.png" alt="bellamyPic">
+									 <div class="caption" id="bellamy">
+									 	<h4>Bellamy</h4>
+									 </div>
+								</a>
+							</div>
+							<div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
+								<a href="#" class="thumbnail text-center alie">
+									<img src="assets/images/ALIE.png" alt="aliePic">
+									 <div class="caption" id="alie">
+									 	<h4>A.L.I.E.</h4>
+									 </div>
+								</a>
+							</div>
+							<div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
+								<a href="#" class="thumbnail text-center dante">
+									<img src="assets/images/Dante_Wallace.png" alt="dantePic">
+									 <div class="caption" id="dante">
+									 	<h4>Dante</h4>
+									 </div>
+								</a>
+							</div>
+							<div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
+								<a href="#" class="thumbnail text-center clarke">
+									<img src="assets/images/Clarke_Griffin.png" alt="clarkePic">
+									 <div class="caption" id="clarke">
+									 	<h4>Clarke</h4>
+									 </div>
+								</a>
+							</div>
+						</div>
+						<div class="row text-center" id="getStarted">
+							<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+								<h2>Select your player to begin the game!</h2>
+							</div>
+						</div>
+						<div class="row" id="enemyPlayers">
+							<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+							</div>
+						</div>
+						<div class="row" id="defenderPlayers">
+							<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<!-- restart button -->
+
+				</div>
+			</div>
+		</div>
+		<!-- RPG CHARACTERS -->
+		<!-- HTML SETUP -->
+		<!-- div for each image
+			images are clickable thumbnails with character name and life points (life points will change)
+			title at the top (optional GIF when you load page or start game)
+
+			div (all 4 characters)
+			title Your character
+
+			div (empty at start, but use css to draw box)
+			Enemies available to attack (appears when you select a character)
+
+			fight section
+			attack (button)
+
+			defender area (div and title)
+
+			text (you attacked __ for ___ damage)
+
+			text (___ attached you for __ damage)
+
+			message - you lose! / win!
+			message - you have defeated __. choose a new enemy to fight
+			message - error (pressing attack with no defender) - select another enemy to fight
+
+			restart button
+
+			Wireframes focus on:
+
+			The range of functions available
+			The relative priorities of the information and functions
+			The rules for displaying certain kinds of information
+			The effect of different scenarios on the display
+			 -->
+		<!-- CSS STYLES -->
+			    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+	    <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script> -->
+	    <!-- Include all compiled plugins (below), or include individual files as needed -->
+	    <!-- <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script> -->
+		<script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+		<script type="text/javascript" src="assets/javascript/game.js"></script>
+	</body>
+</html>

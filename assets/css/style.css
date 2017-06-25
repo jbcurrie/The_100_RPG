@@ -1,0 +1,41 @@
+.myCharacter {
+	background-color: #13d619;
+
+}
+
+.enemyCharacter {
+	background-color: #db1111;	
+
+}
+
+.defenderCharacter {
+	background-color: #000000;
+
+}
+
+body, .jumbotron {
+	 /*background-color: #cccccc;*/
+	 /*background-image: url("../images/background2.png");*/
+}
+
+h4 {
+	color : #ffffff;
+	font-weight: bold;
+}
+
+/*
+a {
+transform : (remove underline)
+*/
+
+/*
+button {
+	display : none;
+}
+*/
+
+/*
+#getStarted {
+	display : none;
+	*/
+
