@@ -7,7 +7,11 @@
 // var myCharacterHP = 0;
 // var defenderHP = 0;
 var myCharacterAP = 0;
+var myCharacterHP = 0;
+var myCharacterName = "";
 var defenderAP = 0;
+var defenderHP = 0;
+var defenderName = "";
 var clarkeHP = 108;
 var clarkeAP = 12;
 var bellamyHP = 135;
@@ -18,7 +22,10 @@ var alieHP = 297;
 var alieAP = 3;
 
 var gamePlayers = $("a");
+//HOLDS ATTRIBUTES AND CONTROLS CLICK FUNCTION
 var gamePlayersClass = [".bellamy",".alie",".dante",".clarke"];
+//SHOWS HP
+var gamePlayersID = ["#bellamy","#alie","#dante","#clarke"];
 var gameDefenders = [];
 var gameEnemies = [];
 var gameHeroes = [];
@@ -28,21 +35,20 @@ var gameHeroes = [];
 //if you need to add css attributes, add them in css and $(this).css({'background-color':'#fffff', 'border-color :1px solid'});
 //use $(this).find('class').show(); to show hidden elements
 $(document).ready(function() {
-	var bellamy = $("<h4>HP : " + bellamyHP + "</h4>");
-	$("#bellamy").append(bellamy);
-	// $("#bellamy").append()
-	// $("#alie").append()
-	var alie = $("<h4>HP : " + alieHP + "</h4>");
-	$("#alie").append(alie);
-	var clarke = $("<h4>HP : " + clarkeHP + "</h4>");
-	$("#clarke").append(clarke);
-	// $("#dante").append()
-	var dante = $("<h4>HP : " + danteHP + "</h4>");
-	$("#dante").append(dante);
+	//need to replace this with data attribute
+	var bellamy = $("<h4>HP : " + $(gamePlayersClass[0]).attr("data-hp") + "</h4>");
+	$(gamePlayersID[0]).append(bellamy);
+	var alie = $("<h4>HP : " + $(gamePlayersClass[1]).attr("data-hp") + "</h4>");
+	$(gamePlayersID[1]).append(alie);
+	var clarke = $("<h4>HP : " + $(gamePlayersClass[2]).attr("data-hp") + "</h4>");
+	$(gamePlayersID[2]).append(clarke);
+	var dante = $("<h4>HP : " + $(gamePlayersClass[3]).attr("data-hp") + "</h4>");
+	$(gamePlayersID[3]).append(dante);
 	$("a").addClass("myCharacter");
-	$("body",".jumbotron").append("<img src=images/Wiki_background.jpg>")
+	$("body",".jumbotron").attr("<img src=../images/Wiki_background.jpg>")
 	pickHero();
 	defenderSelection();
+	// attack();
 	//could also add data attributes here for AP
 });	
 
@@ -59,9 +65,9 @@ function pickHero () {
 	$("body").one("click", "a", function (event) {
 		event.stopPropagation();
 		$("a").removeClass("myCharacter");
-			console.log(this);
+			// console.log(this);
 			for (var i = 0; i < gamePlayers.length; i++) {
-				console.log(i);
+				// console.log(i);
 				if (this.closest("a") === gamePlayers.get(i)) {
 					$(gamePlayersClass[i]).closest("a").addClass("myCharacter");
 					gameHeroes.push(gamePlayersClass[i]);
@@ -71,7 +77,7 @@ function pickHero () {
 					//append to the enemy div
 					$(gamePlayersClass[i]).closest("a").addClass("enemyCharacter");
 					gameEnemies.push(gamePlayersClass[i]);
-					// $(gamePlayersClass[i]).closest(".col-lg-3").detach();
+					//$(gamePlayersClass[i]).closest(".col-lg-3").parent().detach();
 					//to do: .remove() /.detach() the ".col" where the "a"'s' were reassigned
 				}
 			}
@@ -91,16 +97,14 @@ function pickHero () {
 				//append below the col div of enemy players
 	});	
 };
-// 	("a").off
-// }
 
 
 function defenderSelection () {
 	$("#enemyPlayers").one("click", "a", function (event) {
 		event.stopPropagation();
-		console.log(this);
+		// console.log(this);
 		for (var i = 0; i < gamePlayers.length; i++) {
-		console.log(i);
+		// console.log(i);
 			if (this.closest("a") === gamePlayers.get(i)) {
 				$(gamePlayersClass[i]).closest("a").addClass("defenderCharacter");
 				gameDefenders.push(gamePlayersClass[i]);
@@ -115,25 +119,86 @@ function defenderSelection () {
 		//TO FIX
 		$("#enemyPlayers").after("<div class='row' id='attackButton'></div>")
 		.append("<div class='col-lg-12 col-md-12 col-sm-12 col-xs-12'></div>")
-		.append("<button type='button' class='btn btn-success'>Attack!</button>");
+		.after("<button type='button' class='btn btn-success' id='attackBtn'>Attack!</button>");
 		
 		for (j in gameDefenders) {
 			$("#defenderPlayers").append("<div class='col-lg-3 col-md-3 col-sm-3 col-xs-3'></div>");
 			$("#defenderPlayers").find(".col-lg-3").last().append($(gameDefenders[j]));
 		}
-	//defender selection
+		//defender selection
 
-	//repeat onclick function above, assign defenderCharacter class
+		//repeat onclick function above, assign defenderCharacter class
 
-	//
+		//
 	});
 };
 
 
-function attack () {
-	//on click run attack function
-		//for this a, get data attribute (should add to HTML code, in order to call on it in functions)
+// function attack () {
+	// on click run attack function
+	// 	for this a, get data attribute (should add to HTML code, in order to call on it in functions)
 		//
+	$("body").on("click", "button", function (event) {
+	// $("#attackBtn").click(function () {
+		// event.stopPropagation();
+		//get the correct ap
+		console.log(this);
+		console.log(gameHeroes);
+		myCharacterAP = $(gameHeroes[0]).attr("data-ap");
+		myCharacterHP = $(gameHeroes[0]).attr("data-hp");
+		myCharacterName = $(gameHeroes[0]).attr("data-name");
+		defenderHP = $(gameDefenders[0]).attr("data-hp");
+		defenderAP = $(gameDefenders[0]).attr("data-ap");
+		defenderName = $(gameDefenders[0]).attr("data-name");
+		// $("#attackBtn").after("<h3> Your hero is: " + myCharacterName + ". AP: " + myCharacterAP + ". HP: " + myCharacterHP + ".</h3>");
+		// $("#attackBtn").after("<h3> Your enemy is: " + defenderName + ". AP: " + defenderAP + ". HP: " + defenderHP + ".</h3>");
+
+		//create an ID that replaces hero ID for HP in div
+		//create an ID that replaces enemy ID for HP in div
+
+
+
+		//assign hero HP to function
+
+		var tempArr = gameHeroes[0].split(".")
+		var temp = tempArr.shift();
+		console.log(tempArr);
+		for (var i = 0; i < gamePlayersClass.length; i++) {
+			if ($(gamePlayersClass[i]).hasClass(tempArr[0])) {
+				myCharacterHP = $(gamePlayersClass[i]).attr("data-hp");
+
+			}
+		}
+		//assign enemy HP to function
+
+
+
+		// $(gameHeroes[0]).attr("data-hp")
+		//each click needs to do this:
+		defenderHP-=myCharacterAP;
+		// myCharacterAP+=myCharacterAP;
+		myCharacterHP-=defenderAP;
+
+		// var crystalValue = ($(this).attr("data-crystalvalue"));
+				//click will pull data attributes of myCharacter
+		//get correct character name
+		// assign that AP to text on screen
+		//.after adds new lines each time you click the button. need text to show once
+		// $("#attackBtn").after("<h3> Your hero is: " + myCharacterName + ". AP: " + myCharacterAP + ". HP: " + myCharacterHP + ".</h3>");
+		// $("#attackBtn").after("<h3> Your enemy is: " + defenderName + ". AP: " + defenderAP + ". HP: " + defenderHP + ".</h3>");
+
+
+		//run an if statement that checks if the HP is above 0
+		//if yes, it takes the current HP and subtracts the opponent HP
+		//the new score displays to HTML, and does not reset
+
+			//decrement enemy HP by hero AP
+				//hero AP stored in global variable
+				//when attack pressed again myCharacterAP counter += hero AP
+
+			//decrement hero HP by enemy AP
+			//enemy AP does not reset
+	});
 	//when attack button pressed:
 	//decrement enemy HP by hero AP
 		//hero AP stored in global variable
@@ -141,9 +206,16 @@ function attack () {
 
 	//decrement hero HP by enemy AP
 	//enemy AP does not reset
-}
+// }
 
 function roundChecker () {
+		//click will pull data attributes of myCharacter
+		//get correct character name
+		// assign that AP to text on screen
+		//.after adds new lines each time you click the button. need text to show once
+		$("#attackBtn").after("<h3> Your hero is: " + myCharacterName + ". AP: " + myCharacterAP + ". HP: " + myCharacterHP + ".</h3>");
+		$("#attackBtn").after("<h3> Your enemy is: " + defenderName + ". AP: " + defenderAP + ". HP: " + defenderHP + ".</h3>");
+
 	//when hero HP < 1
 		//you lose! 
 		//restart button, if clicked, start game
