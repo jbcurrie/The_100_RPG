@@ -13,12 +13,12 @@
 
 }
 
-body, .jumbotron {
+body {
 	 /*background-color: #cccccc;*/
-	 /*background-image: url("../images/background2.png");*/
+	 /*background-image: url("../images/Wiki-background.jpg");*/
 }
 
-h4 {
+h4,h2,h1,h3 {
 	color : #ffffff;
 	font-weight: bold;
 }
@@ -26,6 +26,8 @@ h4 {
 .btn {
     margin-bottom: 10px; 
 }
+
+
 
 /*
 a {

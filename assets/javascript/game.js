@@ -46,13 +46,19 @@ $(document).ready(function() {
 	var dante = $("<h4>HP : " + $(gamePlayersClass[3]).data("hp") + "</h4>");
 	$(gamePlayersID[3]).append(dante);
 	$("a").addClass("myCharacter");
-	$("body",".jumbotron").attr("<img src=../images/Wiki_background.jpg>")
+	// $("body",".jumbotron").attr("<img src=../images/Wiki_background.jpg>")
+	// document.getElementById("jumbotron").style.backgroundImage="url(assets/images/Wiki_background.jpg)";
+	document.querySelector("body").style.backgroundImage="url(assets/images/Wiki_background.jpg)";
 	pickHero();
 	defenderSelection();
 	 // do {
-    $("body").on("click", "button", function (event) {
+    $("body").on("click.attack", "button", function (event) {
 	// event.stopPropagation();
-	attack();
+	if (gameDefenders.length > 0) {
+		//debugger;
+		attack();
+	}
+	roundChecker();
 	});
   // 	} while(myCharacterHP >= 0 || defenderHP >= 0)
 	
@@ -83,6 +89,7 @@ function pickHero () {
 					//remove from the current div
 					//append to the enemy div
 					$(gamePlayersClass[i]).closest("a").addClass("enemyCharacter");
+					// var placeHolder = $(gamePlayersClass[i]).closest("a").detach();
 					gameEnemies.push(gamePlayersClass[i]);
 
 
@@ -93,10 +100,12 @@ function pickHero () {
 			$("#getStarted").empty().append("<h2>Select your first enemy to begin the battle!</h2>");
 			//for each game defenders, append to new class
 			// $("#enemyPlayers").append();
+
+			//use placeholder variable instead of below code
 			for (j in gameEnemies) {
 				$("#enemyPlayers").append("<div class='col-lg-3 col-md-3 col-sm-3 col-xs-3'></div>");
-				$("#enemyPlayers").find(".col-lg-3").last().append($(gameEnemies[j]));
-				$("#startPlayers").find('col-lg-3').find("a :not(.myCharacter)").remove();
+				$("#enemyPlayers").find(".col-lg-3").last().append($(gameEnemies[j]));		
+				// $("#startPlayers").find('col-lg-3').find("a :not(.myCharacter)").remove();
 			}
 				//add a class/variable/value indicating this is your character so that you can run a function to push enemies to the next div
 				//click should only work for a in startPlayers div
@@ -127,12 +136,15 @@ function defenderSelection () {
 		// $("#attackButton").append("<div class='col-lg-12 col-md-12 col-sm-12 col-xs-12'></div>");
 		//.find(".col-lg-12").append
 		//TO FIX
-		var html = "<div class='row text-center' id='attackButton'>" + 
-						"<div class='col-lg-12 col-md-12 col-sm-12 col-xs-12'>" + 
-								"<button type='button' class='btn btn-success' id='attackBtn'>Attack!</button>" +
-						"</div>" +
-					"</div>"
-		$("#enemyPlayers").after(html);
+		// debugger;
+		if(($("div").hasClass("attackButton") === false)) {
+			var html = "<div class='row text-center attackButton'>" + 
+							"<div class='col-lg-12 col-md-12 col-sm-12 col-xs-12'>" + 
+									"<button type='button' class='btn btn-success' id='attackBtn'>Attack!</button>" +
+							"</div>" +
+						"</div>"
+			$("#enemyPlayers").after(html);
+		};
 		// $("#attackButton").append("<div class='col-lg-12 col-md-12 col-sm-12 col-xs-12' id'attackbuttoncol'></div>");
 		// //doesn't work
 		// $("#attackbuttoncol").append("<button type='button' class='btn btn-success' id='attackBtn'>Attack!</button>");
@@ -151,26 +163,12 @@ function defenderSelection () {
 
 
 function attack () {
+	//either wrap this in an if statement to determine when to switch enemies, or build it in the round checker
 	// on click run attack function
-	// 	for this a, get data attribute (should add to HTML code, in order to call on it in functions)
-		//
-	// $("body").on("click", "button", function (event) {
-		// $("#attackBtn").click(function () {
-		// event.stopPropagation();
-		//get the correct ap
-		// console.log(this);
-		// console.log(gameHeroes);
-		// myCharacterAP = $(gameHeroes[0]).data("ap");
-		// myCharacterHP = $(gameHeroes[0]).data("hp");
 		myCharacterName = $(gameHeroes[0]).data("name");
 		// defenderHP = $(gameDefenders[0]).data("hp");
 		defenderAP = $(gameDefenders[0]).data("ap");
 		defenderName = $(gameDefenders[0]).data("name");
-		// $("#attackBtn").append("<h3> Your hero is: " + myCharacterName + ". AP: " + myCharacterAP + ". HP: " + myCharacterHP + ".</h3>");
-		// $("#attackBtn").append("<h3> Your enemy is: " + defenderName + ". AP: " + defenderAP + ". HP: " + defenderHP + ".</h3>");
-
-		//assign hero HP to function
-		// debugger;
 		var tempArr = gameHeroes[0].split(".");
 		var temp = tempArr.shift();
 		// console.log(tempArr);
@@ -178,10 +176,6 @@ function attack () {
 			if ($(gamePlayersClass[i]).hasClass(tempArr[0])) {
 				// debugger;
 				myCharacterHP = $(gamePlayersClass[i]).data("hp") - defenderAP;
-				// console.log(myCharacterHP);
-				// myCharacterHP = $(gamePlayersClass[i]).attr("data-hp");
-				// myCharacterHP - 10;
-				// debugger;
 				// $(gamePlayersID[i]).find("h4:last").replaceWith($("<h4>HP : " + myCharacterHP + "</h4>"));
 				$(gamePlayersClass[i]).data("hp",myCharacterHP);
 				console.log(myCharacterHP);
@@ -189,79 +183,89 @@ function attack () {
 				//add attack statement below button (once)
 			}
 		}
-		// debugger;
 		var tempArrE = gameDefenders[0].split(".");
 		var tempE = tempArrE.shift();
-		// console.log(tempArrE);
 
 		for (var j = 0; j < gamePlayersClass.length; j++) {
 			if ($(gamePlayersClass[j]).hasClass(tempArrE[0])) {
-
 				myCharacterApAmp += $(gameHeroes[0]).data("ap");
 				defenderHP = $(gamePlayersClass[j]).data("hp") - myCharacterApAmp;
-				
 				$(gamePlayersClass[j]).data("hp",defenderHP);
-				
 				// console.log(defenderHP);
 				$(gamePlayersID[j]).find("h4:last").replaceWith($("<h4>HP : " + defenderHP + "</h4>"));	
 
 				console.log(myCharacterApAmp);
 				console.log(defenderHP);
 			}		
-
 		}
-		
-
-
-
-		// $(gameHeroes[0]).attr("data-hp")
-		//each click needs to do this:
-		// defenderHP-=myCharacterAP;
-		// // myCharacterAP+=myCharacterAP;
-		// myCharacterHP-=defenderAP;
-
-		// var crystalValue = ($(this).attr("data-crystalvalue"));
-				//click will pull data attributes of myCharacter
-		//get correct character name
-		// assign that AP to text on screen
 		//.after adds new lines each time you click the button. need text to show once
 		// $("#attackBtn").after("<h3> Your hero is: " + myCharacterName + ". AP: " + myCharacterAP + ". HP: " + myCharacterHP + ".</h3>");
 		// $("#attackBtn").after("<h3> Your enemy is: " + defenderName + ". AP: " + defenderAP + ". HP: " + defenderHP + ".</h3>");
-
-
-		//run an if statement that checks if the HP is above 0
-		//if yes, it takes the current HP and subtracts the opponent HP
-		//the new score displays to HTML, and does not reset
-
-			//decrement enemy HP by hero AP
-				//hero AP stored in global variable
-				//when attack pressed again myCharacterAP counter += hero AP
-
-			//decrement hero HP by enemy AP
-			//enemy AP does not reset
-	// });
-	//when attack button pressed:
-	//decrement enemy HP by hero AP
-		//hero AP stored in global variable
-	//when attack pressed again myCharacterAP counter += hero AP
-
-	//decrement hero HP by enemy AP
-	//enemy AP does not reset
 }
 
 function roundChecker () {
-		//click will pull data attributes of myCharacter
-		//get correct character name
-		// assign that AP to text on screen
-		//.after adds new lines each time you click the button. need text to show once
-		$("#attackBtn").after("<h3> Your hero is: " + myCharacterName + ". AP: " + myCharacterAP + ". HP: " + myCharacterHP + ".</h3>");
-		$("#attackBtn").after("<h3> Your enemy is: " + defenderName + ". AP: " + defenderAP + ". HP: " + defenderHP + ".</h3>");
+	// either keep in round checker or add to attack (so that you can kill it when attack conditions are met)
+	if ($("body #attackBtn").on("click.attack") && ($("div").hasClass("attackMessage") === false)) {
+		var attackMessage = "<div class='row text-center attackMessage'>" + 
+								"<div class='col-lg-12 col-md-12 col-sm-12 col-xs-12'>" + 
+									"<h3>" + defenderName + " attacked you for " + defenderAP + " damage!</h3>" +
+									"<h3>You attacked " + defenderName + " for " + myCharacterApAmp + " damage!</h3>" +
+								"</div>" +
+							"</div>";
+		$("#attackBtn").after(attackMessage);
+	} 
+	else if ($("div").hasClass("attackMessage")) {
+		 // debugger;
+			$(".attackMessage").html("<div class='row text-center attackMessage'>" + 
+								"<div class='col-lg-12 col-md-12 col-sm-12 col-xs-12'>" + 
+									"<h3>" + defenderName + " attacked you for " + defenderAP + " damage!</h3>" +
+									"<h3>You attacked " + defenderName + " for " + myCharacterApAmp + " damage!</h3>" +
+								"</div>" +
+							"</div>");
+	}
 
-	//when hero HP < 1
+	if (defenderHP <= 0) {
+		$("#getStarted").empty().append("<h2>Choose another Enemy.</h2>");
+		$(".attackMessage").html("<div class='row text-center attackMessage'>" + 
+						"<div class='col-lg-12 col-md-12 col-sm-12 col-xs-12'>" + 
+							"<h3> You've defeated " + defenderName + " </h3>" +
+							"</div>" + 
+						"</div>");
+		$("a.defenderCharacter").remove();
+		// $(gameDefenders[0]).removeClass("defenderCharacter");
+		gameDefenders.pop();
+		gameEnemies.pop();
+		defenderSelection();
+	}
+	// debugger;
+	//requires you to press attack again and displays NaN
+	if (gameDefenders.length === 0 && gameEnemies.length === 0 && ($("a").hasClass("enemyCharacter") === false)) {
+		$("#getStarted").empty().append("<h1>You Win!</h1>");
+		$(".attackMessage").remove();
+		$("div.attackButton").remove();
+		//add an if statement so that button doesn't repeatedly appear.
+		var html = "<div class='row text-center restart'>" + 
+							"<div class='col-lg-12 col-md-12 col-sm-12 col-xs-12'>" + 
+									"<button type='button' class='btn btn-success' id='restartBtn'>Play Again</button>" +
+							"</div>" +
+						"</div>"
+			$("#getStarted").after(html);
+
+	}
+
+	//restart function (on click event)
+
+	// if  enemy HP <= 0, pop defender, and allow for enemy selector (may need to change click function to on/off instead of one)
+		//flash message if attack is presssed and no defender array if defender array.length = 0
+
+	//if enemy array.length = 0, you win. ***pop up (modal) mycharacter gif. 
+	//if hero array.length = 0 OR if hero hp <=0 you lose ***pop up (modal) defender gif.
+
+	//when hero HP <= 0
 		//you lose! 
 		//restart button, if clicked, start game
 
-	// when enemy HP < 1
+	// when enemy HP <= 0
 		//if defender array.length <1
 		//you win
 
