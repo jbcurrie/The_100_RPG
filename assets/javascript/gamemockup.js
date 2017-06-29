@@ -1,5 +1,7 @@
+//would need to change the click function parameters. if this class exists, then call this function.
+//would need to add each class that handles a function at the end of the preceding function, in order to avoid multiple events on one click
+//would need to changes what's emptied and replaced on restart
 
-//resolve duplicate points on restart issue
 var myCharacterAP = 0;
 var myCharacterApAmp = 0;
 var myCharacterHP = 0;
@@ -60,7 +62,7 @@ function start() {
 	// $(".enemyPlayers").on("click", "a", defenderSelection);
 	defenderSelection();
 	//sets HP AP attack parameters and conditions for win/loss
-	
+	debugger;
 	// $("button").on("click", attack);
 	attack();
 	//resets the game, reloads the HTML code
@@ -75,9 +77,9 @@ function start() {
 
 
 function pickHero () {
-	// 
+	// debugger;
 	$(".startPlayers").one("click", "a", function (event) {
-		// ;
+		// debugger	;
 		// event.stopPropagation();
 		$("a").removeClass("myCharacter");
 			// console.log(this);
@@ -85,7 +87,7 @@ function pickHero () {
 				// console.log(i);
 				if (this.closest("a") === gamePlayers.get(i)) {
 					$(gamePlayersClass[i]).closest("a").addClass("myCharacter");
-					$(gamePlayersClass[i]).parent().addClass("hero-col");
+					// $(gamePlayersClass[i]).parent().addClass("hero-col");
 					gameHeroes.push(gamePlayersClass[i]);
 					//empty .startPlayers div
 					//replace with hero html
@@ -97,8 +99,8 @@ function pickHero () {
 					// placeHolder = $(gamePlayersClass[i]).closest("a").detach();
 
 					gameEnemies.push(gamePlayersClass[i]);
-					// 
-					detachCharacters.push($(gamePlayersClass[i]).closest(".col-lg-3").detach());
+					// debugger;
+					detachCharacters.push($(gamePlayersClass[i]).closest(".col-lg-2").detach());
 			
 
 
@@ -109,8 +111,12 @@ function pickHero () {
 
 			// for (j in gameEnemies) {
 				// restore detached characters to the div
+				// $.each(detachCharacters, function(i,v) {
+				// 	$(".enemyPlayers").append(v);
+				// })	
+
 				$.each(detachCharacters, function(i,v) {
-					$(".enemyPlayers").append(v);
+					$(".startPlayers").append(v);
 				})	
 
 			// }
@@ -120,7 +126,7 @@ function pickHero () {
 
 function defenderSelection () {
 
-		// ;
+		// debugger	;
 		// event.stopPropagation();
 	$(".enemyPlayers").on("click", "a", function(event) {
 		if  (gameDefenders.length === 0) {
@@ -132,16 +138,16 @@ function defenderSelection () {
 					//will push defender 2x on second round
 					for (var j = 0; j < gameEnemies.length; j++) {
 						// no longer splices at correct position following detach function.
-						// 
+						// debugger;
 						if ($("a.enemyCharacter").get(j) === $("a.defenderCharacter").get(0)) {
 							$(gamePlayersClass[i]).closest("a").removeClass("enemyCharacter");
 							gameEnemies.splice(j,1);
 						}
 					}
-					// 
+					// debugger;
 					//switch places with the below for loop to preserve splice? 
 					gameDefenders.push(gamePlayersClass[i]);
-					detachEnemies.push($(gamePlayersClass[i]).closest(".col-lg-3").detach());
+					detachEnemies.push($(gamePlayersClass[i]).closest(".col-lg-2").detach());
 					//empty enemy players div
 					//add back enemies
 					//gameEnemies.pop() acts as an enemy counter. not import that the array value doesn't match the character
@@ -158,7 +164,7 @@ function defenderSelection () {
 			$(".getStarted").empty().append("<h2>Attack when you're ready!</h2>");
 
 
-			// 
+			// debugger;
 			if(($("div").hasClass("attackButton") === false)) {
 				var html = "<div class='row text-center attackButton'>" + 
 								"<div class='col-lg-12 col-md-12 col-sm-12 col-xs-12'>" + 
@@ -173,13 +179,13 @@ function defenderSelection () {
 								"</div>" +
 							"</div>");
 			};
-			// 
+			// debugger;
 			//defender section has empty columns
 			$.each(detachEnemies, function(k,v) {
 				$(".defenderPlayers").append(v);
 			});
 
-			// 
+			// debugger;
 		}; 
 	});
 
@@ -187,7 +193,7 @@ function defenderSelection () {
 
 
 function attack () {
-	
+	debugger;
 	$("div").on("click", "button", function(event) {
 		event.stopPropagation();
 		// $("restartBtn").off("click","button",restart);
@@ -202,7 +208,7 @@ function attack () {
 				// console.log(tempArr);
 				for (var i = 0; i < gamePlayersClass.length; i++) {
 					if ($(gamePlayersClass[i]).hasClass(tempArr[0])) {
-						// 
+						// debugger;
 						myCharacterHP = $(gamePlayersClass[i]).data("hp") - defenderAP;
 
 						$(gamePlayersClass[i]).data("hp",myCharacterHP);
@@ -237,7 +243,7 @@ function attack () {
 				$(".attackBtn").after(attackMessage);
 			} 
 			else if ($("div").hasClass("attackMessage")) {
-				 // 
+				 // debugger;
 					$(".attackMessage").html("<div class='row text-center attackMessage'>" + 
 										"<div class='col-lg-12 col-md-12 col-sm-12 col-xs-12'>" + 
 											"<h3>" + defenderName + " attacked you for " + defenderAP + " damage!</h3>" +
@@ -261,11 +267,11 @@ function attack () {
 								"</div>");
 
 				//warps my point system. need to fix
-				detachDefenders.push($("a.defenderCharacter").closest(".col-lg-3").detach());
+				detachDefenders.push($("a.defenderCharacter").closest(".col-lg-2").detach());
 				$("a.defenderCharacter").remove();
 				detachEnemies.shift();
 				gameDefenders.pop();
-				// 
+				// debugger;
 			} else if (defenderHP < myCharacterHP  && defenderHP < 0 && $("a.enemyCharacter").length === 0) {
 				$(".getStarted").empty();
 				$(".attackMessage").html("<div class='row text-center attackMessage'>" + 
@@ -275,42 +281,26 @@ function attack () {
 								"</div>");
 
 				//warps my point system. need to fix
-				detachDefenders.push($("a.defenderCharacter").closest(".col-lg-3").detach());
+				detachDefenders.push($("a.defenderCharacter").closest(".col-lg-2").detach());
 				$("a.defenderCharacter").remove();
 				detachEnemies.shift();
 				gameDefenders.pop();
 			} else if (myCharacterHP <= 0 && defenderHP > myCharacterHP && $("a.defenderCharacter").length !== 0) {
 				$(".getStarted").empty().append("<h2> You lost! " + defenderName + " Wins! </h2>");
 				gameHeroes.pop();
-				
+				debugger;
 				if ($("div.restart").hasClass("restart") === false) {
 						$(".attackButton").empty().replaceWith(reset);
 						$("div.attackButton").removeClass("attackButton");
 				}
 			}
-// var modal = "<div class='modal fade' tabindex='-1' role='dialog'>" + 
-// 			  "<div class='modal-dialog' role='document'>" + 
-// 			    "<div class='modal-content'>" + 
-// 			      "<div class='modal-header'>" + 
-// 			        "<button type='button' class='close' data-dismiss='modal' aria-label='Close'><span aria-hidden='true'>&times;</span></button>" + 
-// 			      + "</div>" + 
-// 			      "<div class='modal-body'>" + 
-// 			        "<img src='assets/images/alie_gif.gif' alt='winner'>" + 
-// 			     "</div>" +
-// 			      "<div class='modal-footer'>" +
-// 			        "<button type='button' class='btn btn-default' data-dismiss='modal'>Close</button>" + 
-// 			      "</div>" + 
-// 			    "</div>" + 
-// 			  "</div>" +
-// 			"</div>";
 
-			// 
-			// 
+
+			// debugger;
+			// debugger;
 			if (gameDefenders.length === 0 && gameEnemies.length === 0 && ($("a").hasClass("enemyCharacter") === false && $("a").length<=1)) {
 				$(".getStarted").empty().append("<h1>You Win!</h1>");
-				// debugger;
 				$(".attackMessage").remove();
-				// .replaceWith(modal);
 				$("div.attackButton").empty().replaceWith(reset)
 				$("div.attackButton").removeClass("attackButton");
 			}
@@ -322,11 +312,11 @@ function attack () {
 }
 
 function restart () {
-	
+	debugger;
 	//remove event listeners at reset
 	$("div").on("click", "button",function(event) {
 		event.stopImmediatePropagation();
-		// ;
+		// debugger	;
 		// event.stopPropagation();
 		if ($(this).hasClass("restartBtn")) {
 			//empty the start players
