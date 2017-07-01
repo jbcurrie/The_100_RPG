@@ -322,7 +322,7 @@ function attack () {
 }
 
 function restart () {
-	debugger;
+	// debugger;
 	//remove event listeners at reset
 	$("div").on("click", "button",function(event) {
 		event.stopImmediatePropagation();
