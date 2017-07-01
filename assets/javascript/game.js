@@ -7,14 +7,14 @@ var myCharacterName = "";
 var defenderAP = 0;
 var defenderHP = 0;
 var defenderName = "";
-var clarkeHP = 108;
-var clarkeAP = 12;
-var bellamyHP = 135;
-var bellamyAP = 9;
-var danteHP = 180;
-var danteAP = 6;
-var alieHP = 297;
-var alieAP = 3;
+// var clarkeHP = 108;
+// var clarkeAP = 12;
+// var bellamyHP = 135;
+// var bellamyAP = 9;
+// var danteHP = 180;
+// var danteAP = 6;
+// var alieHP = 297;
+// var alieAP = 3;
 var detachEnemies = [];
 var detachCharacters = [];
 var detachDefenders = [];
@@ -322,7 +322,7 @@ function attack () {
 }
 
 function restart () {
-	
+	debugger;
 	//remove event listeners at reset
 	$("div").on("click", "button",function(event) {
 		event.stopImmediatePropagation();
