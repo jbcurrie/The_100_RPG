@@ -308,7 +308,7 @@ function attack () {
 
 			// 
 			// 
-			if (gameDefenders.length === 0 && gameEnemies.length === 0 && ($("a").hasClass("enemyCharacter") === false && $("a").length<=1)) {
+			if (gameDefenders.length === 0 && gameEnemies.length === 0 && ($("a").hasClass("enemyCharacter") === false)) {
 				// debugger;
 				$(".getStarted").empty().append("<h1>You Win!</h1>");
 				// debugger;
