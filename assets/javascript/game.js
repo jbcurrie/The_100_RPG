@@ -133,8 +133,9 @@ function defenderSelection () {
 					for (var j = 0; j < gameEnemies.length; j++) {
 						// no longer splices at correct position following detach function.
 						// 
+						debugger;
 						if ($("a.enemyCharacter").get(j) === $("a.defenderCharacter").get(0)) {
-							$(gamePlayersClass[i]).closest("a").removeClass("enemyCharacter");
+							$(gamePlayersClass[j]).closest("a").removeClass("enemyCharacter");
 							gameEnemies.splice(j,1);
 						}
 					}
