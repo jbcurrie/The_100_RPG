@@ -155,31 +155,32 @@ function defenderSelection () {
 				}
 		
 			}
-			$(".getStarted").empty().append("<h2>Attack when you're ready!</h2>");
+				$(".getStarted").empty().append("<h2>Attack when you're ready!</h2>");
 
 
-			// 
-			if(($("div").hasClass("attackButton") === false)) {
-				var html = "<div class='row text-center attackButton'>" + 
-								"<div class='col-lg-12 col-md-12 col-sm-12 col-xs-12'>" + 
-										"<button type='button' class='btn btn-success attackBtn'>Attack!</button>" +
-								"</div>" +
-							"</div>";
-				$(".enemyPlayers").after(html);
-			} else {
-				$(".attackButton").html("<div class='row text-center attackButton'>" + 
-								"<div class='col-lg-12 col-md-12 col-sm-12 col-xs-12'>" + 
-										"<button type='button' class='btn btn-success attackBtn'>Attack!</button>" +
-								"</div>" +
-							"</div>");
-			};
-			// 
-			//defender section has empty columns
-			$.each(detachEnemies, function(k,v) {
-				$(".defenderPlayers").append(v);
-			});
+				// 
+				if(($("div").hasClass("attackButton") === false)) {
+					var html = "<div class='row text-center attackButton'>" + 
+									"<div class='col-lg-12 col-md-12 col-sm-12 col-xs-12'>" + 
+											"<button type='button' class='btn btn-success attackBtn'>Attack!</button>" +
+									"</div>" +
+								"</div>";
+					$(".enemyPlayers").after(html);
+				} 
+				// else {
+				// 	$(".attackButton").html("<div class='row text-center attackButton'>" + 
+				// 					"<div class='col-lg-12 col-md-12 col-sm-12 col-xs-12'>" + 
+				// 							"<button type='button' class='btn btn-success attackBtn'>Attack!</button>" +
+				// 					"</div>" +
+				// 				"</div>");
+				// };
+				// 
+				//defender section has empty columns
+				$.each(detachEnemies, function(k,v) {
+					$(".defenderPlayers").append(v);
+				});
 
-			// 
+				// 
 		}; 
 	});
 
@@ -284,8 +285,9 @@ function attack () {
 				gameHeroes.pop();
 				
 				if ($("div.restart").hasClass("restart") === false) {
-						$(".attackButton").empty().replaceWith(reset);
-						$("div.attackButton").removeClass("attackButton");
+						// $(".attackButton").removeClass("attackButton");
+						$(".attackButton").empty().remove();
+						$(".getStarted").after($(reset));
 				}
 			}
 // var modal = "<div class='modal fade' tabindex='-1' role='dialog'>" + 
@@ -307,12 +309,12 @@ function attack () {
 			// 
 			// 
 			if (gameDefenders.length === 0 && gameEnemies.length === 0 && ($("a").hasClass("enemyCharacter") === false && $("a").length<=1)) {
+				// debugger;
 				$(".getStarted").empty().append("<h1>You Win!</h1>");
 				// debugger;
-				$(".attackMessage").remove();
-				// .replaceWith(modal);
-				$("div.attackButton").empty().replaceWith(reset)
-				$("div.attackButton").removeClass("attackButton");
+				// $(".attackButton").removeClass("attackButton");
+				$(".attackButton").empty().remove();
+				$(".getStarted").after($(reset));
 			}
 
 			//if enemy array.length = 0, you win. ***pop up (modal) mycharacter gif. 
@@ -342,6 +344,7 @@ function restart () {
 			$(".defenderPlayers").empty();
 			$(".defenderPlayers").splice(0);
 			$("div.restart").remove();
+			// $("div.attackButton").remove();
 			// $("a").empty();
 			// $("a").splice(0);
 			//add back start players
